@@ -13,115 +13,115 @@ if($_SESSION["perfil"] == "Vendedor"){
 }
 
 ?>
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-image: url('vistas/img/plantilla/3.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 
-  <section class="content-header">
-    
-    <h1>
-      
-      Administrar gastos
-    
-    </h1>
-
-    <ol class="breadcrumb">
-      
-      <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      
-      <li class="active">Administrar gastos</li>
-    
-    </ol>
-
-  </section>
-
-  <section class="content">
-
-    <div class="box">
-
-      <div class="box-header with-border">
+<section class="content-header" style="color: white">
   
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregargastos">
-          
-          Agregar gasto
+  <h1>
+    
+    Administrar gastos
+  
+  </h1>
 
-        </button>
+  <ol class="breadcrumb">
+    
+    <li><a href="inicio" style="color: white"><i class="fa fa-dashboard"></i> Inicio</a></li>
+    
+    <li class="active" style="color: white">Administrar gastos</li>
+  
+  </ol>
+
+</section>
+
+<section class="content">
+
+  <div class="box">
+
+    <div class="box-header with-border">
+
+      <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregargastos">
+        
+        Agregar gasto
+
+      </button>
+    
+    <div class="box-body">
       
-      <div class="box-body">
-        
-       <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+     <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+       
+      <thead>
+       
+       <tr>
          
-        <thead>
+         <th style="width:10px">#</th>
+         <th>Vendedor</th>
+         <th>Valor</th>
+         <th>Descripción</th>
+         <th>Fecha</th>
+         <th>Acciones</th>
          
-         <tr>
-           
-           <th style="width:10px">#</th>
-           <th>Vendedor</th>
-           <th>Valor</th>
-           <th>Descripción</th>
-           <th>Fecha</th>
-           <th>Acciones</th>
-           
-         </tr> 
+       </tr> 
 
-        </thead>  
-        
-       <tbody>
+      </thead>  
+      
+     <tbody>
 
-       <?php
-       $item = null;
-       $valor = null;
- 
-       $gastos = ControladorGastos::ctrMostrarGastos($item, $valor);
+     <?php
+     $item = null;
+     $valor = null;
 
-       foreach ($gastos as $key => $value) {
-        // obtener el nombre del vendedor 
+     $gastos = ControladorGastos::ctrMostrarGastos($item, $valor);
 
-        $itemUsuario = "id";
-        $valorUsuario = $value["vendedor"];
+     foreach ($gastos as $key => $value) {
+      // obtener el nombre del vendedor 
 
-        $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
-        
-        echo '<tr>
+      $itemUsuario = "id";
+      $valorUsuario = $value["vendedor"];
 
-               <td>'.($key+1).'</td>
+      $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
+      
+      echo '<tr>
 
-               <td>'.$respuestaUsuario["nombre"].'</td>
+             <td>'.($key+1).'</td>
 
-               <td>'.$value["valor"].'</td>
+             <td>'.$respuestaUsuario["nombre"].'</td>
 
-               <td>'.$value["descripcion"].'</td>
+             <td>'.$value["valor"].'</td>
 
-               <td>'.$value["fecha"].'</td>
+             <td>'.$value["descripcion"].'</td>
 
-               <td>
+             <td>'.$value["fecha"].'</td>
 
-                    <div class="btn-group">
-                        
-                     ';
+             <td>
 
-                      if($_SESSION["perfil"] == "Administrador"){
+                  <div class="btn-group">
+                      
+                   ';
 
-                      echo '
-                      <button class="btn btn-warning btnEditarGasto" data-toggle="modal" data-target="#modalEditarGasto" idGasto="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
-                      <button class="btn btn-danger btnEliminarGasto" idGasto="'.$value["id"].'"><i class="fa fa-times"></i></button>';
+                    if($_SESSION["perfil"] == "Administrador"){
 
-                    }
+                    echo '
+                    <button class="btn btn-warning btnEditarGasto" data-toggle="modal" data-target="#modalEditarGasto" idGasto="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
+                    <button class="btn btn-danger btnEliminarGasto" idGasto="'.$value["id"].'"><i class="fa fa-times"></i></button>';
 
-                    echo '</div>
-                  </td>
-             </tr>';
-         }
-       ?>
-        </tbody>
+                  }
 
-        </table>
-        
-       <input type="hidden" value="<?php echo $_SESSION['perfil']; ?>" id="perfilOculto">
+                  echo '</div>
+                </td>
+           </tr>';
+       }
+     ?>
+      </tbody>
 
-      </div>
+      </table>
+      
+     <input type="hidden" value="<?php echo $_SESSION['perfil']; ?>" id="perfilOculto">
 
     </div>
 
-  </section>
+  </div>
+
+</section>
 
 </div>
 

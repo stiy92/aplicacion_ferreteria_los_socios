@@ -24,213 +24,213 @@
 // }
 
 ?>
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-image: url('vistas/img/plantilla/10.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 
-  <section class="content-header"> 
-    
-    <h1>
-      
-      Administrar ventas
-    
-    </h1>
-
-    <ol class="breadcrumb">
-      
-      <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      
-      <li class="active">Administrar ventas</li>
-    
-    </ol>
-
-  </section>
-
-  <section class="content">
-
-    <div class="box">
-
-      <div class="box-header with-border">
+<section class="content-header" style="color: white"> 
   
-        <a href="crear-venta">
+  <h1>
+    
+    Administrar ventas
+  
+  </h1>
 
-          <button class="btn btn-primary">
-            
-            Agregar venta
+  <ol class="breadcrumb">
+    
+    <li><a href="inicio" style="color: white"><i class="fa fa-dashboard"></i> Inicio</a></li>
+    
+    <li class="active" style="color: white">Administrar ventas</li>
+  
+  </ol>
 
-          </button>
+</section>
 
-        </a>
-        <a href="ventas-credito">
+<section class="content">
 
-          <button class="btn btn-success">
-            
-            Ver creditos
+  <div class="box">
 
-          </button>
+    <div class="box-header with-border">
 
-        </a>
+      <a href="crear-venta">
 
-         <button type="button" class="btn btn-default pull-right" id="daterange-btn">
-           
-            <span>
-              <i class="fa fa-calendar"></i> 
+        <button class="btn btn-primary">
+          
+          Agregar venta
 
-              <?php
+        </button>
 
-                if(isset($_GET["fechaInicial"])){
+      </a>
+      <a href="ventas-credito">
 
-                  echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
-                
-                }else{
-                 
-                  echo 'Rango de fecha';
+        <button class="btn btn-success">
+          
+          Ver creditos
 
-                }
+        </button>
 
-              ?>
-            </span>
+      </a>
 
-            <i class="fa fa-caret-down"></i>
-
-         </button>
-
-      </div>
-
-      <div class="box-body">
-        
-       <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+       <button type="button" class="btn btn-default pull-right" id="daterange-btn">
          
-        <thead>
-         
-         <tr>
-           
-           <th style="width:10px">#</th>
-           <th>Factura</th>
-           <th>Cliente</th>
-           <th>Vendedor</th>
-           <th>Forma</th>
-           <th>Neto</th> 
-           <th>Total</th> 
-           <th>Fecha</th>
-           <th>Debe</th>
-           <th>Abono</th>
-           <th>-%</th>
-           <th>Acciones</th>
+          <span>
+            <i class="fa fa-calendar"></i> 
 
-         </tr> 
+            <?php
 
-        </thead>
+              if(isset($_GET["fechaInicial"])){
 
-        <tbody>
-
-        <?php
-
-          if(isset($_GET["fechaInicial"])){
-
-            $fechaInicial = $_GET["fechaInicial"];
-            $fechaFinal = $_GET["fechaFinal"];
-
-          }else{
-
-            $fechaInicial = null;
-            $fechaFinal = null;
-
-          }
-
-          $respuesta = ControladorVentas::ctrRangoFechasVentas($fechaInicial, $fechaFinal);
-
-          foreach ($respuesta as $key => $value) {
-           
-           echo '<tr>
-
-                  <td>'.($key+1).'</td>
-
-                  <td>'.$value["codigo"].'</td>';
-
-                  $itemCliente = "id";
-                  $valorCliente = $value["id_cliente"];
-
-                  $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
-
-                  echo '<td>'.$respuestaCliente["nombre"].'</td>';
-
-                  $itemUsuario = "id";
-                  $valorUsuario = $value["id_vendedor"];
-
-                  $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
-
-                  echo '<td>'.$respuestaUsuario["nombre"].'</td>
-
-                  <td>'.$value["metodo_pago"].'</td>
-
-                  <td>$ '.number_format($value["neto"]).'</td> 
-
-                  <td>$ '.number_format($value["total"]).'</td>
-
-                  <td>'.$value["fecha"].'</td>
-                  <td>$ '.number_format($value["saldo_pendiente"]).'</td>
-                  <td>$ '.number_format($value["monto_abonado"]).'</td>
-                  <td>$ '.number_format($value["descuento"]).'</td>
-
-                  <td>
-
-                    <div class="btn-group">
-
-
-
-                      <button class="btn btn-success btnImprimirTicket" codigoVenta="'.$value["codigo"].'">
-
-                        <i class="fa fa-ticket">T</i>
-
-                      </button>
-                        
-                      <button class="btn btn-info btnImprimirFactura" codigoVenta="'.$value["codigo"].'">
-
-                        <i class="fa fa-print"></i>P
-
-                      </button>';
-
-                      if($_SESSION["perfil"] == "Administrador"){
-
-                      echo '
-                      <button class="btn btn-warning btnEditarVenta" idVenta="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
-                      <button class="btn btn-danger btnEliminarVenta" idVenta="'.$value["id"].'"><i class="fa fa-times"></i></button>
-                      <button class="btn btn-info btnabonarcredito" data-toggle="modal" data-target="#modalAbonar" idVenta="'.$value["id"].'"><i class="fa fa-credit-card"></i></button>
-                      <button class="btn btn-primary btnpagarcredito" idVenta="'.$value["id"].'"><i class="fa fa-usd"></i></button>';
-                    }
-
-                    echo '</div>  
-
-                  </td>
-
-                </tr>';
-            }
-
-        ?>
+                echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+              
+              }else{
                
-        </tbody>
+                echo 'Rango de fecha';
 
-       </table>
+              }
 
-       <?php
+            ?>
+          </span>
 
-               if (isset($_GET["idEliminarVenta"])) {
-                 $eliminarVenta = new ControladorVentas();
-                 $eliminarVenta->ctrEliminarVenta();
-               }
+          <i class="fa fa-caret-down"></i>
 
-     
-                if (isset($_GET["idPagarVenta"])) {
-                 $pagarVenta = new ControladorVentas();
-                 $pagarVenta->ctrPagarVenta();
-                }
-      ?>
-       
-
-      </div>
+       </button>
 
     </div>
 
-  </section>
+    <div class="box-body">
+      
+     <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+       
+      <thead>
+       
+       <tr>
+         
+         <th style="width:10px">#</th>
+         <th>Factura</th>
+         <th>Cliente</th>
+         <th>Vendedor</th>
+         <th>Forma</th>
+         <th>Neto</th> 
+         <th>Total</th> 
+         <th>Fecha</th>
+         <th>Debe</th>
+         <th>Abono</th>
+         <th>-%</th>
+         <th>Acciones</th>
+
+       </tr> 
+
+      </thead>
+
+      <tbody>
+
+      <?php
+
+        if(isset($_GET["fechaInicial"])){
+
+          $fechaInicial = $_GET["fechaInicial"];
+          $fechaFinal = $_GET["fechaFinal"];
+
+        }else{
+
+          $fechaInicial = null;
+          $fechaFinal = null;
+
+        }
+
+        $respuesta = ControladorVentas::ctrRangoFechasVentas($fechaInicial, $fechaFinal);
+
+        foreach ($respuesta as $key => $value) {
+         
+         echo '<tr>
+
+                <td>'.($key+1).'</td>
+
+                <td>'.$value["codigo"].'</td>';
+
+                $itemCliente = "id";
+                $valorCliente = $value["id_cliente"];
+
+                $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
+
+                echo '<td>'.$respuestaCliente["nombre"].'</td>';
+
+                $itemUsuario = "id";
+                $valorUsuario = $value["id_vendedor"];
+
+                $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
+
+                echo '<td>'.$respuestaUsuario["nombre"].'</td>
+
+                <td>'.$value["metodo_pago"].'</td>
+
+                <td>$ '.number_format($value["neto"]).'</td> 
+
+                <td>$ '.number_format($value["total"]).'</td>
+
+                <td>'.$value["fecha"].'</td>
+                <td>$ '.number_format($value["saldo_pendiente"]).'</td>
+                <td>$ '.number_format($value["monto_abonado"]).'</td>
+                <td>$ '.number_format($value["descuento"]).'</td>
+
+                <td>
+
+                  <div class="btn-group">
+
+
+
+                    <button class="btn btn-success btnImprimirTicket" codigoVenta="'.$value["codigo"].'">
+
+                      <i class="fa fa-ticket">T</i>
+
+                    </button>
+                      
+                    <button class="btn btn-info btnImprimirFactura" codigoVenta="'.$value["codigo"].'">
+
+                      <i class="fa fa-print"></i>P
+
+                    </button>';
+
+                    if($_SESSION["perfil"] == "Administrador"){
+
+                    echo '
+                    <button class="btn btn-warning btnEditarVenta" idVenta="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
+                    <button class="btn btn-danger btnEliminarVenta" idVenta="'.$value["id"].'"><i class="fa fa-times"></i></button>
+                    <button class="btn btn-info btnabonarcredito" data-toggle="modal" data-target="#modalAbonar" idVenta="'.$value["id"].'"><i class="fa fa-credit-card"></i></button>
+                    <button class="btn btn-primary btnpagarcredito" idVenta="'.$value["id"].'"><i class="fa fa-usd"></i></button>';
+                  }
+
+                  echo '</div>  
+
+                </td>
+
+              </tr>';
+          }
+
+      ?>
+             
+      </tbody>
+
+     </table>
+
+     <?php
+
+             if (isset($_GET["idEliminarVenta"])) {
+               $eliminarVenta = new ControladorVentas();
+               $eliminarVenta->ctrEliminarVenta();
+             }
+
+   
+              if (isset($_GET["idPagarVenta"])) {
+               $pagarVenta = new ControladorVentas();
+               $pagarVenta->ctrPagarVenta();
+              }
+    ?>
+     
+
+    </div>
+
+  </div>
+
+</section>
 
 </div>
 

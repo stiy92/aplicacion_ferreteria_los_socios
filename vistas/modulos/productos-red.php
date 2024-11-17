@@ -13,77 +13,76 @@ if($_SESSION["perfil"] == "Vendedor"){
 }
 
 ?>
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-image: url('vistas/img/plantilla/4.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 
-  <section class="content-header">
-    
-    <h1>
-      
-      Administrar productos en rojo
-    
-    </h1>
-
-    <ol class="breadcrumb">
-      
-      <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      
-      <li class="active">Administrar productos en rojo</li>
-    
-    </ol>
-
-  </section>
-
-  <section class="content">
-
-    <div class="box">
-
-      <div class="box-header with-border">
+<section class="content-header" style="color: white">
   
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarProducto">
-          
-          Agregar producto
+  <h1>
+    
+    Administrar productos en rojo
+  
+  </h1>
 
-        </button>
-        <button class="btn btn-success"  >
-          
+  <ol class="breadcrumb">
+    
+    <li><a href="inicio" style="color: white"><i class="fa fa-dashboard"></i> Inicio</a></li>
+    
+    <li class="active" style="color: white">Administrar productos en rojo</li>
+  
+  </ol>
+
+</section>
+
+<section class="content">
+
+  <div class="box">
+
+    <div class="box-header with-border">
+
+      <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarProducto">
+        
+        Agregar producto
+
+      </button>
+      <button class="btn btn-success"  >
+        
         <a href="productos" class="pred"></i>Ver Productos</a>
         </button>
-       
 
-      </div>
+    </div>
+    
+    <div class="box-body">
       
-      <div class="box-body">
-        
-       <table class="table table-bordered table-striped dt-responsive tablaProductosRED" width="100%">
+     <table class="table table-bordered table-striped dt-responsive tablaProductosRED" width="100%">
+       
+      <thead>
+       
+       <tr>
          
-        <thead>
+         <th style="width:10px">#</th>
+         <th>Imagen</th>
+         <th>Código</th>
+         <th>Descripción</th>
+         <!-- <th>Categoría</th> -->
+         <th>Stock</th>
+         <th>Precio de compra</th>
+         <th>Precio de venta</th>
+         <th>Agregado</th>
+         <th>Acciones</th>
          
-         <tr>
-           
-           <th style="width:10px">#</th>
-           <th>Imagen</th>
-           <th>Código</th>
-           <th>Descripción</th>
-           <!-- <th>Categoría</th> -->
-           <th>Stock</th>
-           <th>Precio de compra</th>
-           <th>Precio de venta</th>
-           <th>Agregado</th>
-           <th>Acciones</th>
-           
-         </tr> 
+       </tr> 
 
-        </thead>      
+      </thead>      
 
-       </table>
+     </table>
 
-       <input type="hidden" value="<?php echo $_SESSION['perfil']; ?>" id="perfilOculto">
-
-      </div>
+     <input type="hidden" value="<?php echo $_SESSION['perfil']; ?>" id="perfilOculto">
 
     </div>
 
-  </section>
+  </div>
+
+</section>
 
 </div>
 

@@ -60,7 +60,7 @@
 
 				<a href="productos">
 
-					<i class="fa fa-product-hunt"></i>
+					<i class="fa-solid fa-landmark"></i>
 					<span>Productos</span>
 
 				</a>
@@ -108,7 +108,7 @@
 
 						<a href="ventas">
 							
-							<i class="fa fa-circle-o"></i>
+							<i class="fa-solid fa-chart-line"></i>
 							<span>Administrar ventas</span>
 
 						</a>
@@ -119,7 +119,7 @@
 
 						<a href="crear-venta">
 							
-							<i class="fa fa-circle-o"></i>
+							<i class="fa-solid fa-money-bill"></i>
 							<span>Crear venta</span>
 
 						</a>
@@ -132,7 +132,7 @@
 
 						<a href="reportes">
 							
-							<i class="fa fa-circle-o"></i>
+							<i class="fa-solid fa-chart-simple"></i>
 							<span>Reporte de ventas</span>
 
 						</a>

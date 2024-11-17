@@ -408,6 +408,10 @@ class ControladorVentas{
 								  $printer->text("--------\n");
                   
 				                  $printer->text("TOTAL: $ ".number_format($totalwithoutd,2)."\n"); //ahora va el total
+
+								  $printer -> feed(1); //Alimentamos el papel 1 vez*/	
+                  
+				                  $printer->text("Metodo de pago: ".$metodo."\n"); //Podemos poner también un pie de página
                   
 				                  $printer -> feed(1); //Alimentamos el papel 1 vez*/	
                   
@@ -501,6 +505,10 @@ class ControladorVentas{
 								  $printer->text("--------\n");
                   
 				                  $printer->text("TOTAL: $ ".number_format($_POST["totalVenta"],2)."\n"); //ahora va el total
+								  
+								  $printer -> feed(1); //Alimentamos el papel 1 vez*/	
+                  
+				                  $printer->text("Metodo de pago: ".$metodo."\n"); //Podemos poner también un pie de página
                   
 				                  $printer -> feed(1); //Alimentamos el papel 1 vez*/	
                   
