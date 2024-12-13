@@ -3,16 +3,16 @@
 # push ferre y push lotion ahora debo de crear push rest
 
 # # Ignore csc and imagenes para el proyecto individual
-# vistas/dist/
+vistas/dist/
 
 # # Ignore csc and imagenes para el proyecto individual
-# vistas/img/plantilla/
+vistas/img/plantilla/
 
 # #color barra
-# vistas/modulos/cabezote.php
+vistas/modulos/cabezote.php
 
 # #color barra too
-# vistas/bower_components
+vistas/bower_components
 
 # #login po la imagen
-# vistas/modulos/login.php
+vistas/modulos/login.php
