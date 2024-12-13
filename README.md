@@ -37,3 +37,127 @@ problema de impimir tickect y pdf tocaba actualizar la carpeta tcpdf exactamente
 el error despues de realizar venta si estaba en la linea 126 como mostraba el mensaje y se modifico la linea poniendo el - al final
 
 la impresora par que sea modo bidirecional tiene que ser version -4 y no -3  en regedy se pude ver w+r y regedy
+
+agregar esto a usuario para validar imagen 
+if (isset($_POST["nuevoUsuario"])) {
+
+    if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoNombre"]) &&
+        preg_match('/^[a-zA-Z0-9]+$/', $_POST["nuevoUsuario"]) &&
+        preg_match('/^[a-zA-Z0-9]+$/', $_POST["nuevoPassword"])) {
+
+        /*=============================================
+        VALIDAR IMAGEN
+        =============================================*/
+
+        $ruta = "";
+
+        // Verifica si el archivo es válido y no está vacío
+        if (isset($_FILES["nuevaFoto"]) && $_FILES["nuevaFoto"]["error"] == 0) {
+
+            // Verifica si el archivo tiene contenido y si es una imagen válida
+            if ($_FILES["nuevaFoto"]["tmp_name"] != "") {
+
+                // Obtenemos las dimensiones de la imagen
+                list($ancho, $alto) = getimagesize($_FILES["nuevaFoto"]["tmp_name"]);
+
+                // Establecemos el tamaño para redimensionar la imagen
+                $nuevoAncho = 500;
+                $nuevoAlto = 500;
+
+                /*=============================================
+                CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL USUARIO
+                =============================================*/
+
+                $directorio = "vistas/img/usuarios/" . $_POST["nuevoUsuario"];
+
+                // Verifica si el directorio ya existe, si no, lo crea
+                if (!file_exists($directorio)) {
+                    mkdir($directorio, 0755, true); // El tercer parámetro permite crear subdirectorios
+                }
+
+                /*=============================================
+                DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
+                =============================================*/
+
+                if ($_FILES["nuevaFoto"]["type"] == "image/jpeg") {
+                    // Procesa la imagen JPEG
+                    $aleatorio = mt_rand(100, 999);
+                    $ruta = $directorio . "/" . $aleatorio . ".jpg";
+
+                    // Creamos la imagen a partir del archivo
+                    $origen = imagecreatefromjpeg($_FILES["nuevaFoto"]["tmp_name"]);
+                    $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+                    imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+                    // Guardamos la imagen redimensionada
+                    imagejpeg($destino, $ruta);
+                }
+
+                if ($_FILES["nuevaFoto"]["type"] == "image/png") {
+                    // Procesa la imagen PNG
+                    $aleatorio = mt_rand(100, 999);
+                    $ruta = $directorio . "/" . $aleatorio . ".png";
+
+                    // Creamos la imagen a partir del archivo
+                    $origen = imagecreatefrompng($_FILES["nuevaFoto"]["tmp_name"]);
+                    $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+                    imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+                    // Guardamos la imagen redimensionada
+                    imagepng($destino, $ruta);
+                }
+            }
+        }
+
+        /*=============================================
+        GUARDA LOS DATOS DEL USUARIO EN LA BASE DE DATOS
+        =============================================*/
+
+        $tabla = "usuarios";
+
+        // Encriptamos la contraseña
+        $encriptar = crypt($_POST["nuevoPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
+        // Preparamos los datos para insertar en la base de datos
+        $datos = array(
+            "nombre" => $_POST["nuevoNombre"],
+            "usuario" => $_POST["nuevoUsuario"],
+            "password" => $encriptar,
+            "perfil" => $_POST["nuevoPerfil"],
+            "foto" => $ruta
+        );
+
+        // Insertamos los datos en la base de datos
+        $respuesta = ModeloUsuarios::mdlIngresarUsuario($tabla, $datos);
+
+        if ($respuesta == "ok") {
+            echo '<script>
+                swal({
+                    type: "success",
+                    title: "¡El usuario ha sido guardado correctamente!",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                }).then(function(result){
+                    if(result.value){
+                        window.location = "usuarios";
+                    }
+                });
+            </script>';
+        }
+
+    } else {
+        echo '<script>
+            swal({
+                type: "error",
+                title: "¡El usuario no puede ir vacío o llevar caracteres especiales!",
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar"
+            }).then(function(result){
+                if(result.value){
+                    window.location = "usuarios";
+                }
+            });
+        </script>';
+    }
+}
+
