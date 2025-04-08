@@ -98,12 +98,19 @@ class ControladorUsuarios{
 
 				$ruta = "";
 
-				if(isset($_FILES["nuevaFoto"]["tmp_name"])){
+				 // Verifica si el archivo es válido y no está vacío
+				 if (isset($_FILES["nuevaFoto"]) && $_FILES["nuevaFoto"]["error"] == 0) {
 
-					list($ancho, $alto) = getimagesize($_FILES["nuevaFoto"]["tmp_name"]);
-
-					$nuevoAncho = 500;
-					$nuevoAlto = 500;
+					// Verifica si el archivo tiene contenido y si es una imagen válida
+					if ($_FILES["nuevaFoto"]["tmp_name"] != "") {
+		
+						// Obtenemos las dimensiones de la imagen
+						list($ancho, $alto) = getimagesize($_FILES["nuevaFoto"]["tmp_name"]);
+		
+						// Establecemos el tamaño para redimensionar la imagen
+						$nuevoAncho = 500;
+						$nuevoAlto = 500;
+		
 
 					/*=============================================
 					CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL USUARIO
@@ -111,7 +118,10 @@ class ControladorUsuarios{
 
 					$directorio = "vistas/img/usuarios/".$_POST["nuevoUsuario"];
 
-					mkdir($directorio, 0755);
+					// Verifica si el directorio ya existe, si no, lo crea
+					if (!file_exists($directorio)) {
+						mkdir($directorio, 0755, true); // El tercer parámetro permite crear subdirectorios
+					}
 
 					/*=============================================
 					DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
@@ -143,9 +153,9 @@ class ControladorUsuarios{
 						GUARDAMOS LA IMAGEN EN EL DIRECTORIO
 						=============================================*/
 
-						$aleatorio = mt_rand(100,999);
-
-						$ruta = "vistas/img/usuarios/".$_POST["nuevoUsuario"]."/".$aleatorio.".png";
+						// Procesa la imagen PNG
+						$aleatorio = mt_rand(100, 999);
+						$ruta = $directorio . "/" . $aleatorio . ".png";
 
 						$origen = imagecreatefrompng($_FILES["nuevaFoto"]["tmp_name"]);						
 
@@ -156,6 +166,8 @@ class ControladorUsuarios{
 						imagepng($destino, $ruta);
 
 					}
+
+				}
 
 				}
 

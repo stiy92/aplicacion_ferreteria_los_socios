@@ -811,6 +811,43 @@ $(".tablas").on("click", ".btnEliminarVenta", function(){
 })
 
 /*=============================================
+IMPRIMIR VENTA
+=============================================*/
+
+$(document).ready(function () {
+    let params = new URLSearchParams(window.location.search);
+
+    if (params.has("idImprimirVenta")) {
+        console.log("Bloque idImprimirVenta ejecutado");
+        var cventa = params.get("idImprimirVenta");
+
+        // First alert: confirm if the user wants to print
+        swal({
+            title: "El ticket se ha imprimido correctamente",
+            text: "¿Deseas imprimir copia de esta venta?",
+            icon: "success",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "No, gracias",
+            confirmButtonText: "Sí, imprimir"
+        }).then((result) => {
+            if (result.value) {
+                // Show the "Imprimiendo Venta" progress message
+				window.location = "index.php?ruta=crear-venta&idImprimirVenta2=" + cventa;
+                 // After the print process, show success
+            } else {
+                // If user doesn't want to print, redirect to "ventas"
+                window.location = "ventas";
+            }
+        });
+    }
+
+    // Realizar cualquier otra acción relacionada con la impresión
+    console.log("Proceso de impresión para la venta: " + cventa);
+});
+
+/*=============================================
 PAGAR VENTA
 =============================================*/
 $(".tablas").on("click", ".btnpagarcredito", function(){

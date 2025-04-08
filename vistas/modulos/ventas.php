@@ -24,9 +24,9 @@
 // }
 
 ?>
-<div class="content-wrapper" style="background-image: url('vistas/img/plantilla/10.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-
-<section class="content-header" style="color: white"> 
+<div class="content-wrapper" style=" background-size: cover; background-position: center; background-repeat: no-repeat;">
+<!-- background-image: url('vistas/img/plantilla/10.jpg'); -->
+<section class="content-header" style="color: green"> 
   
   <h1>
     
@@ -36,10 +36,10 @@
 
   <ol class="breadcrumb">
     
-    <li><a href="inicio" style="color: white"><i class="fa fa-dashboard"></i> Inicio</a></li>
-    
-    <li class="active" style="color: white">Administrar ventas</li>
-  
+    <li><a href="inicio" ><i class="fa fa-dashboard"></i> Inicio</a></li>
+    <!-- style="color: green " -->
+    <li class="active" >Administrar ventas</li>
+  <!-- style="color:green " -->
   </ol>
 
 </section>
@@ -151,27 +151,39 @@
 
                 $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
 
-                echo '<td>'.$respuestaCliente["nombre"].'</td>';
+                if ($respuestaCliente) {
+                  // Si el cliente existe, mostramos su nombre
+                  echo '<td>' . $respuestaCliente["nombre"] . '</td>';
+              } else {
+                  // Si no existe, mostramos un mensaje o un valor predeterminado
+                  echo '<td>Cliente no disponible</td>';
+              }
+
+                // echo '<td>'.$respuestaCliente["nombre"].'</td>';
 
                 $itemUsuario = "id";
                 $valorUsuario = $value["id_vendedor"];
 
                 $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
 
-                echo '<td>'.$respuestaUsuario["nombre"].'</td>
+               // Verificamos si el usuario existe
+                if ($respuestaUsuario) {
+                  // Si el usuario existe, mostramos su nombre
+                  echo '<td>' . $respuestaUsuario["nombre"] . '</td>';
+                } else {
+                  // Si no existe, mostramos un mensaje o un valor predeterminado
+                  echo '<td>Usuario no disponible</td>';
+                }
 
-                <td>'.$value["metodo_pago"].'</td>
+                echo '<td>'.$value["metodo_pago"].'</td>';
+                echo '<td>$ '.number_format($value["neto"]).'</td>';
+                echo '<td>$ '.number_format($value["total"]).'</td>';
+                echo '<td>'.$value["fecha"].'</td>';
+                echo '<td>$ '.number_format($value["saldo_pendiente"]).'</td>';
+                echo '<td>$ '.number_format($value["monto_abonado"]).'</td>';
+                echo '<td>$ '.number_format($value["descuento"]).'</td>';
 
-                <td>$ '.number_format($value["neto"]).'</td> 
-
-                <td>$ '.number_format($value["total"]).'</td>
-
-                <td>'.$value["fecha"].'</td>
-                <td>$ '.number_format($value["saldo_pendiente"]).'</td>
-                <td>$ '.number_format($value["monto_abonado"]).'</td>
-                <td>$ '.number_format($value["descuento"]).'</td>
-
-                <td>
+                echo '<td>
 
                   <div class="btn-group">
 
