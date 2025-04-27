@@ -117,6 +117,17 @@
 
 					<li>
 
+			            	<a href="ventas-por-producto">
+
+			            		<i class="fa fa-bar-chart"></i>
+			            		<span>Ventas por producto</span>
+
+			            	</a>
+
+			            </li>
+
+					<li>
+
 						<a href="crear-venta">
 							
 							<i class="fa-solid fa-money-bill"></i>
