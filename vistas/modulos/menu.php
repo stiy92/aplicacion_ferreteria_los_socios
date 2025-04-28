@@ -125,6 +125,16 @@
 			            	</a>
 
 			            </li>
+						<li>
+
+			            	<a href="creditos-por-cliente">
+
+			            		<i class="fa fa-address-book"></i>
+			            		<span>Creditos por cliente</span>
+
+			            	</a>
+
+			            </li>
 
 					<li>
 

@@ -986,7 +986,7 @@ class ControladorVentas{
 	}
 
    /*=============================================
-	RANGO FECHAS MOSTRAR VENTAS CREDITOS TABLA
+	MOSTRAR VENTAS CREDITOS TABLA
 	=============================================*/	
 
 	static public function ctrVentasCreditos(){
